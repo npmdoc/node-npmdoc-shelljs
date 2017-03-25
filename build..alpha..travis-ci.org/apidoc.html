@@ -46,368 +46,369 @@
     font-weight: bold;
 }
 </style>
-<h1>api-documentation for
+<h1>api documentation for
     <a
-        
+
         href="http://github.com/shelljs/shelljs"
-        
+
     >shelljs (v0.7.7)</a>
 </h1>
+<h4>Portable Unix shell commands for Node.js</h4>
 <div class="apidocSectionDiv"><a
     href="#apidoc.tableOfContents"
     id="apidoc.tableOfContents"
 ><h1>table of contents</h1></a><ol>
-    
+
     <li class="apidocModuleLi"><a href="#apidoc.module.shelljs">module shelljs</a><ol>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.ShellString">
             function <span class="apidocSignatureSpan">shelljs.</span>ShellString
             <span class="apidocSignatureSpan">(stdout, stderr, code)</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.cat">
             function <span class="apidocSignatureSpan">shelljs.</span>cat
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.cd">
             function <span class="apidocSignatureSpan">shelljs.</span>cd
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.chmod">
             function <span class="apidocSignatureSpan">shelljs.</span>chmod
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.cp">
             function <span class="apidocSignatureSpan">shelljs.</span>cp
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.dirs">
             function <span class="apidocSignatureSpan">shelljs.</span>dirs
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.echo">
             function <span class="apidocSignatureSpan">shelljs.</span>echo
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.error">
             function <span class="apidocSignatureSpan">shelljs.</span>error
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.exec">
             function <span class="apidocSignatureSpan">shelljs.</span>exec
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.exit">
             function <span class="apidocSignatureSpan">shelljs.</span>exit
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.find">
             function <span class="apidocSignatureSpan">shelljs.</span>find
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.grep">
             function <span class="apidocSignatureSpan">shelljs.</span>grep
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.head">
             function <span class="apidocSignatureSpan">shelljs.</span>head
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.ln">
             function <span class="apidocSignatureSpan">shelljs.</span>ln
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.ls">
             function <span class="apidocSignatureSpan">shelljs.</span>ls
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.mkdir">
             function <span class="apidocSignatureSpan">shelljs.</span>mkdir
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.mv">
             function <span class="apidocSignatureSpan">shelljs.</span>mv
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.popd">
             function <span class="apidocSignatureSpan">shelljs.</span>popd
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.pushd">
             function <span class="apidocSignatureSpan">shelljs.</span>pushd
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.pwd">
             function <span class="apidocSignatureSpan">shelljs.</span>pwd
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.rm">
             function <span class="apidocSignatureSpan">shelljs.</span>rm
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.sed">
             function <span class="apidocSignatureSpan">shelljs.</span>sed
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.set">
             function <span class="apidocSignatureSpan">shelljs.</span>set
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.sort">
             function <span class="apidocSignatureSpan">shelljs.</span>sort
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.tail">
             function <span class="apidocSignatureSpan">shelljs.</span>tail
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.tempdir">
             function <span class="apidocSignatureSpan">shelljs.</span>tempdir
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.test">
             function <span class="apidocSignatureSpan">shelljs.</span>test
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.touch">
             function <span class="apidocSignatureSpan">shelljs.</span>touch
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.uniq">
             function <span class="apidocSignatureSpan">shelljs.</span>uniq
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.which">
             function <span class="apidocSignatureSpan">shelljs.</span>which
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">shelljs.</span>config</span>
-            
+
         </li>
-        
+
     </ol></li>
-    
+
     <li class="apidocModuleLi"><a href="#apidoc.module.shelljs.config">module shelljs.config</a><ol>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">boolean <span class="apidocSignatureSpan">shelljs.config.</span>fatal</span>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">boolean <span class="apidocSignatureSpan">shelljs.config.</span>noglob</span>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">boolean <span class="apidocSignatureSpan">shelljs.config.</span>silent</span>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">boolean <span class="apidocSignatureSpan">shelljs.config.</span>verbose</span>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.config.reset">
             function <span class="apidocSignatureSpan">shelljs.config.</span>reset
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <a class="apidocElementLiA" href="#apidoc.element.shelljs.config.resetForTesting">
             function <span class="apidocSignatureSpan">shelljs.config.</span>resetForTesting
             <span class="apidocSignatureSpan">()</span>
             </a>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">number <span class="apidocSignatureSpan">shelljs.config.</span>maxdepth</span>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">shelljs.config.</span>globOptions</span>
-            
+
         </li>
-        
+
         <li>
-            
+
             <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">shelljs.config.</span>execPath</span>
-            
+
         </li>
-        
+
     </ol></li>
-    
+
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.shelljs" id="apidoc.module.shelljs">module shelljs</a></h1>
-    
-    
+
+
     <h2>
         <a href="#apidoc.element.shelljs.ShellString" id="apidoc.element.shelljs.ShellString">
         function <span class="apidocSignatureSpan">shelljs.</span>ShellString
@@ -436,9 +437,9 @@
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.cat" id="apidoc.element.shelljs.cat">
         function <span class="apidocSignatureSpan">shelljs.</span>cat
@@ -552,7 +553,7 @@ shell.cd(&#x27;lib&#x27;);
 shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
 shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
 shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.<span class="apidocCodeKeywordSpan">cat</span>(&#x27;macro.js&#\
+shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.<span class="apidocCodeKeywordSpan">cat</span>(&#x27;macro.js&#
 x27;), file);
 });
 shell.cd(&#x27;..&#x27;);
@@ -563,9 +564,9 @@ shell.echo(&#x27;Error: Git commit failed&#x27;);
 shell.exit(1);
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.cd" id="apidoc.element.shelljs.cd">
         function <span class="apidocSignatureSpan">shelljs.</span>cd
@@ -688,9 +689,9 @@ shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
 shell.cd(&#x27;..&#x27;);
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.chmod" id="apidoc.element.shelljs.chmod">
         function <span class="apidocSignatureSpan">shelljs.</span>chmod
@@ -798,9 +799,9 @@ shell.cd(&#x27;..&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.cp" id="apidoc.element.shelljs.cp">
         function <span class="apidocSignatureSpan">shelljs.</span>cp
@@ -924,9 +925,9 @@ shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
 shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro.js&#x27;), file);
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.dirs" id="apidoc.element.shelljs.dirs">
         function <span class="apidocSignatureSpan">shelljs.</span>dirs
@@ -1034,9 +1035,9 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.echo" id="apidoc.element.shelljs.echo">
         function <span class="apidocSignatureSpan">shelljs.</span>echo
@@ -1159,9 +1160,9 @@ shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
 shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.error" id="apidoc.element.shelljs.error">
         function <span class="apidocSignatureSpan">shelljs.</span>error
@@ -1174,9 +1175,9 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.exec" id="apidoc.element.shelljs.exec">
         function <span class="apidocSignatureSpan">shelljs.</span>exec
@@ -1299,9 +1300,9 @@ if (shell.<span class="apidocCodeKeywordSpan">exec</span>(&#x27;git commit -am &
 ## Global vs. Local
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.exit" id="apidoc.element.shelljs.exit">
         function <span class="apidocSignatureSpan">shelljs.</span>exit
@@ -1333,9 +1334,9 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 // Replace macros in each .js file
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.find" id="apidoc.element.shelljs.find">
         function <span class="apidocSignatureSpan">shelljs.</span>find
@@ -1443,9 +1444,9 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.grep" id="apidoc.element.shelljs.grep">
         function <span class="apidocSignatureSpan">shelljs.</span>grep
@@ -1568,9 +1569,9 @@ Commands can send their output to another command in a pipe-like fashion.
 side of a pipe. Pipes can be chained.
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.head" id="apidoc.element.shelljs.head">
         function <span class="apidocSignatureSpan">shelljs.</span>head
@@ -1678,9 +1679,9 @@ side of a pipe. Pipes can be chained.
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.ln" id="apidoc.element.shelljs.ln">
         function <span class="apidocSignatureSpan">shelljs.</span>ln
@@ -1788,9 +1789,9 @@ side of a pipe. Pipes can be chained.
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.ls" id="apidoc.element.shelljs.ls">
         function <span class="apidocSignatureSpan">shelljs.</span>ls
@@ -1914,9 +1915,9 @@ shell.cd(&#x27;..&#x27;);
 // Run external tool synchronously
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.mkdir" id="apidoc.element.shelljs.mkdir">
         function <span class="apidocSignatureSpan">shelljs.</span>mkdir
@@ -2024,9 +2025,9 @@ shell.cd(&#x27;..&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.mv" id="apidoc.element.shelljs.mv">
         function <span class="apidocSignatureSpan">shelljs.</span>mv
@@ -2134,9 +2135,9 @@ shell.cd(&#x27;..&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.popd" id="apidoc.element.shelljs.popd">
         function <span class="apidocSignatureSpan">shelljs.</span>popd
@@ -2244,9 +2245,9 @@ shell.cd(&#x27;..&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.pushd" id="apidoc.element.shelljs.pushd">
         function <span class="apidocSignatureSpan">shelljs.</span>pushd
@@ -2354,9 +2355,9 @@ shell.cd(&#x27;..&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.pwd" id="apidoc.element.shelljs.pwd">
         function <span class="apidocSignatureSpan">shelljs.</span>pwd
@@ -2464,9 +2465,9 @@ shell.cd(&#x27;..&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.rm" id="apidoc.element.shelljs.rm">
         function <span class="apidocSignatureSpan">shelljs.</span>rm
@@ -2590,9 +2591,9 @@ shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
 shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.sed" id="apidoc.element.shelljs.sed">
         function <span class="apidocSignatureSpan">shelljs.</span>sed
@@ -2716,9 +2717,9 @@ shell.cd(&#x27;..&#x27;);
 if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.set" id="apidoc.element.shelljs.set">
         function <span class="apidocSignatureSpan">shelljs.</span>set
@@ -2826,9 +2827,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.sort" id="apidoc.element.shelljs.sort">
         function <span class="apidocSignatureSpan">shelljs.</span>sort
@@ -2936,9 +2937,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.tail" id="apidoc.element.shelljs.tail">
         function <span class="apidocSignatureSpan">shelljs.</span>tail
@@ -3046,9 +3047,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.tempdir" id="apidoc.element.shelljs.tempdir">
         function <span class="apidocSignatureSpan">shelljs.</span>tempdir
@@ -3156,9 +3157,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.test" id="apidoc.element.shelljs.test">
         function <span class="apidocSignatureSpan">shelljs.</span>test
@@ -3266,9 +3267,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.touch" id="apidoc.element.shelljs.touch">
         function <span class="apidocSignatureSpan">shelljs.</span>touch
@@ -3376,9 +3377,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.uniq" id="apidoc.element.shelljs.uniq">
         function <span class="apidocSignatureSpan">shelljs.</span>uniq
@@ -3486,9 +3487,9 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.which" id="apidoc.element.shelljs.which">
         function <span class="apidocSignatureSpan">shelljs.</span>which
@@ -3612,24 +3613,24 @@ shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
 shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 ...</pre></li>
     </ul>
-    
-    
-    
-    
+
+
+
+
 </div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.shelljs.config" id="apidoc.module.shelljs.config">module shelljs.config</a></h1>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.config.reset" id="apidoc.element.shelljs.config.reset">
         function <span class="apidocSignatureSpan">shelljs.config.</span>reset
@@ -3661,9 +3662,9 @@ var shell = require(&#x27;shelljs&#x27;);
 /* ... */
 ...</pre></li>
     </ul>
-    
-    
-    
+
+
+
     <h2>
         <a href="#apidoc.element.shelljs.config.resetForTesting" id="apidoc.element.shelljs.config.resetForTesting">
         function <span class="apidocSignatureSpan">shelljs.config.</span>resetForTesting
@@ -3677,14 +3678,14 @@ var shell = require(&#x27;shelljs&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
 </div>
 
 <div class="apidocFooterDiv">
