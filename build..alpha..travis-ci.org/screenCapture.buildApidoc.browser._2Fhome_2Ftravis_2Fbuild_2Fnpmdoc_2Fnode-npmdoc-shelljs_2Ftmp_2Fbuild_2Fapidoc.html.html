@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="http://github.com/shelljs/shelljs"
-
-    >shelljs (v0.7.7)</a>
+    <a href="http://github.com/shelljs/shelljs">shelljs (v0.7.7)</a>
 </h1>
 <h4>Portable Unix shell commands for Node.js</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.shelljs">module shelljs</a><ol>
 
@@ -651,8 +644,8 @@
   var that;
   if (stdout instanceof Array) {
     that = stdout;
-    that.stdout = stdout.join(&#x27;\n&#x27;);
-    if (stdout.length &#x3e; 0) that.stdout += &#x27;\n&#x27;;
+    that.stdout = stdout.join('\n');
+    if (stdout.length &gt; 0) that.stdout += '\n';
   } else {
     that = new String(stdout);
     that.stdout = stdout;
@@ -668,18 +661,18 @@
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // Dest is not existing dir, but multiple sources given
-if ((!destExists || !destStat.isDirectory()) &#x26;&#x26; sources.length &#x3e; 1) {
-  common.error(&#x27;dest is not a directory (too many sources)&#x27;);
+if ((!destExists || !destStat.isDirectory()) &amp;&amp; sources.length &gt; 1) {
+  common.error('dest is not a directory (too many sources)');
 }
 
 // Dest is an existing file, but -n is given
-if (destExists &#x26;&#x26; destStat.isFile() &#x26;&#x26; options.no_force) {
-  return new common.<span class="apidocCodeKeywordSpan">ShellString</span>(&#x27;&#x27;, &#x27;&#x27;, 0);
+if (destExists &amp;&amp; destStat.isFile() &amp;&amp; options.no_force) {
+  return new common.<span class="apidocCodeKeywordSpan">ShellString</span>('', '', 0);
 }
 
 sources.forEach(function (src) {
   if (!fs.existsSync(src)) {
-    common.error(&#x27;no such file or directory: &#x27; + src, { continue: true });
+    common.error('no such file or directory: ' + src, { continue: true });
     return; // skip file
   }
 ...</pre></li>
@@ -709,17 +702,17 @@ sources.forEach(function (src) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -736,16 +729,16 @@ sources.forEach(function (src) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -753,7 +746,7 @@ sources.forEach(function (src) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -766,7 +759,7 @@ sources.forEach(function (src) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -776,38 +769,38 @@ sources.forEach(function (src) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.cp('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
-shell.cd(&#x27;lib&#x27;);
-shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
-shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.<span class="apidocCodeKeywordSpan">cat</span>(&#x27;macro.js&#
+shell.cd('lib');
+shell.ls('*.js').forEach(function (file) {
+shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.<span class="apidocCodeKeywordSpan">cat</span>('macro.js&amp;#
 x27;), file);
 });
-shell.cd(&#x27;..&#x27;);
+shell.cd('..');
 
 // Run external tool synchronously
-if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
-shell.echo(&#x27;Error: Git commit failed&#x27;);
+if (shell.exec('git commit -am "Auto-commit"').code !== 0) {
+shell.echo('Error: Git commit failed');
 shell.exit(1);
 ...</pre></li>
     </ul>
@@ -836,17 +829,17 @@ shell.exit(1);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -863,16 +856,16 @@ shell.exit(1);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -880,7 +873,7 @@ shell.exit(1);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -893,7 +886,7 @@ shell.exit(1);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -903,37 +896,37 @@ shell.exit(1);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 }
 
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
-shell.<span class="apidocCodeKeywordSpan">cd</span>(&#x27;lib&#x27;);
-shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
-  shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro.js&#x27;), file);
+shell.<span class="apidocCodeKeywordSpan">cd</span>('lib');
+shell.ls('*.js').forEach(function (file) {
+  shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+  shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+  shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat('macro.js'), file);
 });
-shell.cd(&#x27;..&#x27;);
+shell.cd('..');
 ...</pre></li>
     </ul>
 
@@ -961,17 +954,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -988,16 +981,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1005,7 +998,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1018,7 +1011,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1028,20 +1021,20 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1071,17 +1064,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1098,16 +1091,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1115,7 +1108,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1128,7 +1121,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1138,38 +1131,38 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if (!shell.which(&#x27;git&#x27;)) {
-shell.echo(&#x27;Sorry, this script requires git&#x27;);
+if (!shell.which('git')) {
+shell.echo('Sorry, this script requires git');
 shell.exit(1);
 }
 
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.<span class="apidocCodeKeywordSpan">cp</span>(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.<span class="apidocCodeKeywordSpan">cp</span>('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
-shell.cd(&#x27;lib&#x27;);
-shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
-shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro.js&#x27;), file);
+shell.cd('lib');
+shell.ls('*.js').forEach(function (file) {
+shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat('macro.js'), file);
 ...</pre></li>
     </ul>
 
@@ -1197,17 +1190,17 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1224,16 +1217,16 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1241,7 +1234,7 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1254,7 +1247,7 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1264,20 +1257,20 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1307,17 +1300,17 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1334,16 +1327,16 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1351,7 +1344,7 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1364,7 +1357,7 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1374,20 +1367,20 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -1395,16 +1388,16 @@ shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro
 ## Examples
 
 ```javascript
-var shell = require(&#x27;shelljs&#x27;);
+var shell = require('shelljs');
 
-if (!shell.which(&#x27;git&#x27;)) {
-  shell.<span class="apidocCodeKeywordSpan">echo</span>(&#x27;Sorry, this script requires git&#x27;);
+if (!shell.which('git')) {
+  shell.<span class="apidocCodeKeywordSpan">echo</span>('Sorry, this script requires git');
   shell.exit(1);
 }
 
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 ...</pre></li>
     </ul>
 
@@ -1428,13 +1421,13 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 function _cat(options, files) {
 var cat = common.readFromPipe();
 
-if (!files &#x26;&#x26; !cat) common.<span class="apidocCodeKeywordSpan">error</span>(&#x27;no paths given&#x27;);
+if (!files &amp;&amp; !cat) common.<span class="apidocCodeKeywordSpan">error</span>('no paths given');
 
 files = [].slice.call(arguments, 1);
 
 files.forEach(function (file) {
   if (!fs.existsSync(file)) {
-    common.error(&#x27;no such file or directory: &#x27; + file);
+    common.error('no such file or directory: ' + file);
   }
 ...</pre></li>
     </ul>
@@ -1463,17 +1456,17 @@ files.forEach(function (file) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1490,16 +1483,16 @@ files.forEach(function (file) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1507,7 +1500,7 @@ files.forEach(function (file) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1520,7 +1513,7 @@ files.forEach(function (file) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1530,32 +1523,32 @@ files.forEach(function (file) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro.js&#x27;), file);
+  shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+  shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+  shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat('macro.js'), file);
 });
-shell.cd(&#x27;..&#x27;);
+shell.cd('..');
 
 // Run external tool synchronously
-if (shell.<span class="apidocCodeKeywordSpan">exec</span>(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
-  shell.echo(&#x27;Error: Git commit failed&#x27;);
+if (shell.<span class="apidocCodeKeywordSpan">exec</span>('git commit -am "Auto-commit"').code !== 0) {
+  shell.echo('Error: Git commit failed');
   shell.exit(1);
 }
 ```
@@ -1583,16 +1576,16 @@ if (shell.<span class="apidocCodeKeywordSpan">exec</span>(&#x27;git commit -am &
 ## Examples
 
 ```javascript
-var shell = require(&#x27;shelljs&#x27;);
+var shell = require('shelljs');
 
-if (!shell.which(&#x27;git&#x27;)) {
-  shell.echo(&#x27;Sorry, this script requires git&#x27;);
+if (!shell.which('git')) {
+  shell.echo('Sorry, this script requires git');
   shell.<span class="apidocCodeKeywordSpan">exit</span>(1);
 }
 
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
 ...</pre></li>
@@ -1622,17 +1615,17 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1649,16 +1642,16 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1666,7 +1659,7 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1679,7 +1672,7 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1689,20 +1682,20 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1732,17 +1725,17 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1759,16 +1752,16 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1776,7 +1769,7 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1789,7 +1782,7 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1799,20 +1792,20 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -1822,9 +1815,9 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 Examples:
 
 ```javascript
-grep(&#x27;foo&#x27;, &#x27;file1.txt&#x27;, &#x27;file2.txt&#x27;).sed(/o/g, &#x27;a&#x27;).to(&#x27;output.txt&#x27;);
-echo(&#x27;files with o\&#x27;s in the name:\n&#x27; + ls().<span class="apidocCodeKeywordSpan">grep</span>(&#x27;o&#x27;));
-cat(&#x27;test.js&#x27;).exec(&#x27;node&#x27;); // pipe to exec() call
+grep('foo', 'file1.txt', 'file2.txt').sed(/o/g, 'a').to('output.txt');
+echo('files with o\'s in the name:\n' + ls().<span class="apidocCodeKeywordSpan">grep</span>('o'));
+cat('test.js').exec('node'); // pipe to exec() call
 ```
 
 Commands can send their output to another command in a pipe-like fashion.
@@ -1857,17 +1850,17 @@ side of a pipe. Pipes can be chained.
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1884,16 +1877,16 @@ side of a pipe. Pipes can be chained.
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -1901,7 +1894,7 @@ side of a pipe. Pipes can be chained.
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -1914,7 +1907,7 @@ side of a pipe. Pipes can be chained.
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -1924,20 +1917,20 @@ side of a pipe. Pipes can be chained.
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1967,17 +1960,17 @@ side of a pipe. Pipes can be chained.
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -1994,16 +1987,16 @@ side of a pipe. Pipes can be chained.
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2011,7 +2004,7 @@ side of a pipe. Pipes can be chained.
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2024,7 +2017,7 @@ side of a pipe. Pipes can be chained.
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2034,20 +2027,20 @@ side of a pipe. Pipes can be chained.
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2077,17 +2070,17 @@ side of a pipe. Pipes can be chained.
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2104,16 +2097,16 @@ side of a pipe. Pipes can be chained.
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2121,7 +2114,7 @@ side of a pipe. Pipes can be chained.
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2134,7 +2127,7 @@ side of a pipe. Pipes can be chained.
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2144,36 +2137,36 @@ side of a pipe. Pipes can be chained.
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
-shell.cd(&#x27;lib&#x27;);
-shell.<span class="apidocCodeKeywordSpan">ls</span>(&#x27;*.js&#x27;).forEach(function (file) {
-  shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro.js&#x27;), file);
+shell.cd('lib');
+shell.<span class="apidocCodeKeywordSpan">ls</span>('*.js').forEach(function (file) {
+  shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+  shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+  shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat('macro.js'), file);
 });
-shell.cd(&#x27;..&#x27;);
+shell.cd('..');
 
 // Run external tool synchronously
 ...</pre></li>
@@ -2203,17 +2196,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2230,16 +2223,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2247,7 +2240,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2260,7 +2253,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2270,20 +2263,20 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2313,17 +2306,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2340,16 +2333,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2357,7 +2350,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2370,7 +2363,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2380,20 +2373,20 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2423,17 +2416,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2450,16 +2443,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2467,7 +2460,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2480,7 +2473,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2490,20 +2483,20 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2533,17 +2526,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2560,16 +2553,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2577,7 +2570,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2590,7 +2583,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2600,20 +2593,20 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2643,17 +2636,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2670,16 +2663,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2687,7 +2680,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2700,7 +2693,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2710,20 +2703,20 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2753,17 +2746,17 @@ shell.cd(&#x27;..&#x27;);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2780,16 +2773,16 @@ shell.cd(&#x27;..&#x27;);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2797,7 +2790,7 @@ shell.cd(&#x27;..&#x27;);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2810,7 +2803,7 @@ shell.cd(&#x27;..&#x27;);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2820,38 +2813,38 @@ shell.cd(&#x27;..&#x27;);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-if (!shell.which(&#x27;git&#x27;)) {
-shell.echo(&#x27;Sorry, this script requires git&#x27;);
+if (!shell.which('git')) {
+shell.echo('Sorry, this script requires git');
 shell.exit(1);
 }
 
 // Copy files to release dir
-shell.<span class="apidocCodeKeywordSpan">rm</span>(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.<span class="apidocCodeKeywordSpan">rm</span>('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
-shell.cd(&#x27;lib&#x27;);
-shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
-shell.sed(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
+shell.cd('lib');
+shell.ls('*.js').forEach(function (file) {
+shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
 ...</pre></li>
     </ul>
 
@@ -2879,17 +2872,17 @@ shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -2906,16 +2899,16 @@ shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -2923,7 +2916,7 @@ shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -2936,7 +2929,7 @@ shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -2946,38 +2939,38 @@ shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 
 // Replace macros in each .js file
-shell.cd(&#x27;lib&#x27;);
-shell.ls(&#x27;*.js&#x27;).forEach(function (file) {
-  shell.<span class="apidocCodeKeywordSpan">sed</span>(&#x27;-i&#x27;, &#x27;BUILD_VERSION&#x27;, &#x27;v0.1.2&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /^.*REMOVE_THIS_LINE.*$/, &#x27;&#x27;, file);
-  shell.sed(&#x27;-i&#x27;, /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat(&#x27;macro.js&#x27;), file);
+shell.cd('lib');
+shell.ls('*.js').forEach(function (file) {
+  shell.<span class="apidocCodeKeywordSpan">sed</span>('-i', 'BUILD_VERSION', 'v0.1.2', file);
+  shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+  shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat('macro.js'), file);
 });
-shell.cd(&#x27;..&#x27;);
+shell.cd('..');
 
 // Run external tool synchronously
-if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
+if (shell.exec('git commit -am "Auto-commit"').code !== 0) {
 ...</pre></li>
     </ul>
 
@@ -3005,17 +2998,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3032,16 +3025,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3049,7 +3042,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3062,7 +3055,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3072,20 +3065,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3115,17 +3108,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3142,16 +3135,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3159,7 +3152,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3172,7 +3165,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3182,26 +3175,26 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     }
 
-    var contents = file === &#x27;-&#x27; ? pipe : fs.readFileSync(file, &#x27;utf8&#x27;);
+    var contents = file === '-' ? pipe : fs.readFileSync(file, 'utf8');
     lines = lines.concat(contents.trimRight().split(/\r*\n/));
   });
 
@@ -3212,7 +3205,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
     sorted = sorted.reverse();
   }
 
-  return sorted.join(&#x27;\n&#x27;) + &#x27;\n&#x27;;
+  return sorted.join('\n') + '\n';
 }
 ...</pre></li>
     </ul>
@@ -3241,17 +3234,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3268,16 +3261,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3285,7 +3278,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3298,7 +3291,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3308,20 +3301,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3351,17 +3344,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3378,16 +3371,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3395,7 +3388,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3408,7 +3401,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3418,20 +3411,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3461,17 +3454,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3488,16 +3481,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3505,7 +3498,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3518,7 +3511,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3528,20 +3521,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -3586,17 +3579,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3613,16 +3606,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3630,7 +3623,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3643,7 +3636,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3653,20 +3646,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3696,17 +3689,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3723,16 +3716,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3740,7 +3733,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3753,7 +3746,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3763,20 +3756,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3806,17 +3799,17 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
       console.error.apply(console, [cmd].concat(args));
     }
 
-    // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+    // If this is coming from a pipe, let's set the pipedValue (otherwise, set
     // it to the empty string)
-    state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+    state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
     if (options.unix === false) { // this branch is for exec()
       retValue = fn.apply(this, args);
     } else { // and this branch is for everything else
-      if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-        // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-      } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-        args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+      if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+        // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+      } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+        args.unshift(''); // only add dummy option if '-option' not already present
       }
 
       // flatten out arrays that are arguments, to make the syntax:
@@ -3833,16 +3826,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Convert ShellStrings (basically just String objects) to regular strings
       args = args.map(function (arg) {
-        if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+        if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
           return arg.toString();
         }
         return arg;
       });
 
-      // Expand the &#x27;~&#x27; if appropriate
+      // Expand the '~' if appropriate
       var homeDir = getUserHome();
       args = args.map(function (arg) {
-        if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+        if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
           return arg.replace(/^~/, homeDir);
         }
         return arg;
@@ -3850,7 +3843,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 
       // Perform glob-expansion on all arguments after globStart, but preserve
       // the arguments before it (like regexes for sed and grep)
-      if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+      if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
         args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
       }
 
@@ -3863,7 +3856,7 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
         retValue = fn.apply(this, args);
       } catch (e) {
 <span class="apidocCodeCommentSpan">        /* istanbul ignore else */
-</span>        if (e.msg === &#x27;earlyExit&#x27;) {
+</span>        if (e.msg === 'earlyExit') {
           retValue = e.retValue;
         } else {
           throw e; // this is probably a bug that should be thrown up the call stack
@@ -3873,20 +3866,20 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
   } catch (e) {
     /* istanbul ignore next */
     if (!state.error) {
-      // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-      console.error(&#x27;ShellJS: internal error&#x27;);
+      // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+      console.error('ShellJS: internal error');
       console.error(e.stack || e);
       process.exit(1);
     }
     if (config.fatal) throw e;
   }
 
-  if (options.wrapOutput &#x26;&#x26;
-      (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+  if (options.wrapOutput &amp;&amp;
+      (typeof retValue === 'string' || Array.isArray(retValue))) {
     retValue = new ShellString(retValue, state.error, state.errorCode);
   }
 
-  state.currentCmd = &#x27;shell.js&#x27;;
+  state.currentCmd = 'shell.js';
   return retValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -3895,16 +3888,16 @@ if (shell.exec(&#x27;git commit -am &#x22;Auto-commit&#x22;&#x27;).code !== 0) {
 ## Examples
 
 ```javascript
-var shell = require(&#x27;shelljs&#x27;);
+var shell = require('shelljs');
 
-if (!shell.<span class="apidocCodeKeywordSpan">which</span>(&#x27;git&#x27;)) {
-  shell.echo(&#x27;Sorry, this script requires git&#x27;);
+if (!shell.<span class="apidocCodeKeywordSpan">which</span>('git')) {
+  shell.echo('Sorry, this script requires git');
   shell.exit(1);
 }
 
 // Copy files to release dir
-shell.rm(&#x27;-rf&#x27;, &#x27;out/Release&#x27;);
-shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
 ...</pre></li>
     </ul>
 
@@ -3932,8 +3925,8 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
   var that;
   if (stdout instanceof Array) {
     that = stdout;
-    that.stdout = stdout.join(&#x27;\n&#x27;);
-    if (stdout.length &#x3e; 0) that.stdout += &#x27;\n&#x27;;
+    that.stdout = stdout.join('\n');
+    if (stdout.length &gt; 0) that.stdout += '\n';
   } else {
     that = new String(stdout);
     that.stdout = stdout;
@@ -3949,18 +3942,18 @@ shell.cp(&#x27;-R&#x27;, &#x27;stuff/&#x27;, &#x27;out/Release&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // Dest is not existing dir, but multiple sources given
-if ((!destExists || !destStat.isDirectory()) &#x26;&#x26; sources.length &#x3e; 1) {
-  common.error(&#x27;dest is not a directory (too many sources)&#x27;);
+if ((!destExists || !destStat.isDirectory()) &amp;&amp; sources.length &gt; 1) {
+  common.error('dest is not a directory (too many sources)');
 }
 
 // Dest is an existing file, but -n is given
-if (destExists &#x26;&#x26; destStat.isFile() &#x26;&#x26; options.no_force) {
-  return new common.<span class="apidocCodeKeywordSpan">ShellString</span>(&#x27;&#x27;, &#x27;&#x27;, 0);
+if (destExists &amp;&amp; destStat.isFile() &amp;&amp; options.no_force) {
+  return new common.<span class="apidocCodeKeywordSpan">ShellString</span>('', '', 0);
 }
 
 sources.forEach(function (src) {
   if (!fs.existsSync(src)) {
-    common.error(&#x27;no such file or directory: &#x27; + src, { continue: true });
+    common.error('no such file or directory: ' + src, { continue: true });
     return; // skip file
   }
 ...</pre></li>
@@ -3976,10 +3969,10 @@ sources.forEach(function (src) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function convertErrorOutput(msg) {
-  if (typeof msg !== &#x27;string&#x27;) {
-    throw new TypeError(&#x27;input must be a string&#x27;);
+  if (typeof msg !== 'string') {
+    throw new TypeError('input must be a string');
   }
-  return msg.replace(/\\/g, &#x27;/&#x27;);
+  return msg.replace(/\\/g, '/');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -3995,22 +3988,22 @@ sources.forEach(function (src) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function error(msg, _code, options) {
   // Validate input
-  if (typeof msg !== &#x27;string&#x27;) throw new Error(&#x27;msg must be a string&#x27;);
+  if (typeof msg !== 'string') throw new Error('msg must be a string');
 
   var DEFAULT_OPTIONS = {
     continue: false,
     code: 1,
-    prefix: state.currentCmd + &#x27;: &#x27;,
+    prefix: state.currentCmd + ': ',
     silent: false,
   };
 
-  if (typeof _code === &#x27;number&#x27; &#x26;&#x26; isObject(options)) {
+  if (typeof _code === 'number' &amp;&amp; isObject(options)) {
     options.code = _code;
-  } else if (isObject(_code)) { // no &#x27;code&#x27;
+  } else if (isObject(_code)) { // no 'code'
     options = _code;
-  } else if (typeof _code === &#x27;number&#x27;) { // no &#x27;options&#x27;
+  } else if (typeof _code === 'number') { // no 'options'
     options = { code: _code };
-  } else if (typeof _code !== &#x27;number&#x27;) { // only &#x27;msg&#x27;
+  } else if (typeof _code !== 'number') { // only 'msg'
     options = {};
   }
   options = objectAssign({}, DEFAULT_OPTIONS, options);
@@ -4018,17 +4011,17 @@ sources.forEach(function (src) {
   if (!state.errorCode) state.errorCode = options.code;
 
   var logEntry = convertErrorOutput(options.prefix + msg);
-  state.error = state.error ? state.error + &#x27;\n&#x27; : &#x27;&#x27;;
+  state.error = state.error ? state.error + '\n' : '';
   state.error += logEntry;
 
   // Throw an error, or log the entry
   if (config.fatal) throw new Error(logEntry);
-  if (msg.length &#x3e; 0 &#x26;&#x26; !options.silent) log(logEntry);
+  if (msg.length &gt; 0 &amp;&amp; !options.silent) log(logEntry);
 
   if (!options.continue) {
     throw {
-      msg: &#x27;earlyExit&#x27;,
-      retValue: (new ShellString(&#x27;&#x27;, state.error, state.errorCode)),
+      msg: 'earlyExit',
+      retValue: (new ShellString('', state.error, state.errorCode)),
     };
   }
 }</pre></li>
@@ -4040,13 +4033,13 @@ sources.forEach(function (src) {
 function _cat(options, files) {
 var cat = common.readFromPipe();
 
-if (!files &#x26;&#x26; !cat) common.<span class="apidocCodeKeywordSpan">error</span>(&#x27;no paths given&#x27;);
+if (!files &amp;&amp; !cat) common.<span class="apidocCodeKeywordSpan">error</span>('no paths given');
 
 files = [].slice.call(arguments, 1);
 
 files.forEach(function (file) {
   if (!fs.existsSync(file)) {
-    common.error(&#x27;no such file or directory: &#x27; + file);
+    common.error('no such file or directory: ' + file);
   }
 ...</pre></li>
     </ul>
@@ -4062,23 +4055,23 @@ files.forEach(function (file) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function expand(list) {
   if (!Array.isArray(list)) {
-    throw new TypeError(&#x27;must be an array&#x27;);
+    throw new TypeError('must be an array');
   }
   var expanded = [];
   list.forEach(function (listEl) {
-    // Don&#x27;t expand non-strings
-    if (typeof listEl !== &#x27;string&#x27;) {
+    // Don't expand non-strings
+    if (typeof listEl !== 'string') {
       expanded.push(listEl);
     } else {
       var ret = glob.sync(listEl, config.globOptions);
       // if glob fails, interpret the string literally
-      expanded = expanded.concat(ret.length &#x3e; 0 ? ret : [listEl]);
+      expanded = expanded.concat(ret.length &gt; 0 ? ret : [listEl]);
     }
   });
   return expanded;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-    &#x27;v&#x27;: &#x27;verbose&#x27;,
+    'v': 'verbose',
   });
 
   filePattern = [].slice.call(arguments, 2);
@@ -4108,11 +4101,11 @@ if (!stat.isSymbolicLink()) {
     <li>description and source-code<pre class="apidocCodePre">function assign() { [native code] }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 var tempDir = _tempDir();
-var stdoutFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var stderrFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var codeFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var scriptFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var sleepFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
+var stdoutFile = path.resolve(tempDir + '/' + common.randomFileName());
+var stderrFile = path.resolve(tempDir + '/' + common.randomFileName());
+var codeFile = path.resolve(tempDir + '/' + common.randomFileName());
+var scriptFile = path.resolve(tempDir + '/' + common.randomFileName());
+var sleepFile = path.resolve(tempDir + '/' + common.randomFileName());
 
 opts = common.<span class="apidocCodeKeywordSpan">extend</span>({
   silent: common.config.silent,
@@ -4121,7 +4114,7 @@ opts = common.<span class="apidocCodeKeywordSpan">extend</span>({
   maxBuffer: DEFAULT_MAXBUFFER_SIZE,
 }, opts);
 
-var previousStdoutContent = &#x27;&#x27;;
+var previousStdoutContent = '';
 ...</pre></li>
     </ul>
 
@@ -4139,12 +4132,12 @@ var previousStdoutContent = &#x27;&#x27;;
   if (os.homedir) {
     result = os.homedir(); // node 3+
   } else {
-    result = process.env[(process.platform === &#x27;win32&#x27;) ? &#x27;USERPROFILE&#x27; : &#x27;HOME&#x27;];
+    result = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
   }
   return result;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-common.register(&#x27;cd&#x27;, _cd, {});
+common.register('cd', _cd, {});
 
 //@
 //@ ### cd([dir])
@@ -4153,9 +4146,9 @@ common.register(&#x27;cd&#x27;, _cd, {});
 function _cd(options, dir) {
 if (!dir) dir = common.<span class="apidocCodeKeywordSpan">getUserHome</span>();
 
-if (dir === &#x27;-&#x27;) {
+if (dir === '-') {
   if (!process.env.OLDPWD) {
-    common.error(&#x27;could not find previous directory&#x27;);
+    common.error('could not find previous directory');
   } else {
     dir = process.env.OLDPWD;
   }
@@ -4172,7 +4165,7 @@ if (dir === &#x27;-&#x27;) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function isObject(a) {
-  return typeof a === &#x27;object&#x27; &#x26;&#x26; a !== null;
+  return typeof a === 'object' &amp;&amp; a !== null;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4194,15 +4187,15 @@ if (dir === &#x27;-&#x27;) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-var child = exec(&#x27;some_long_running_process&#x27;, {async:true});
-child.stdout.on(&#x27;data&#x27;, function(data) {
+var child = exec('some_long_running_process', {async:true});
+child.stdout.on('data', function(data) {
   /* ... do something with data ... */
 });
 
-exec(&#x27;some_long_running_process&#x27;, function(code, stdout, stderr) {
-  console.<span class="apidocCodeKeywordSpan">log</span>(&#x27;Exit code:&#x27;, code);
-  console.log(&#x27;Program output:&#x27;, stdout);
-  console.log(&#x27;Program stderr:&#x27;, stderr);
+exec('some_long_running_process', function(code, stdout, stderr) {
+  console.<span class="apidocCodeKeywordSpan">log</span>('Exit code:', code);
+  console.log('Program output:', stdout);
+  console.log('Program stderr:', stderr);
 });
 ```
 
@@ -4222,54 +4215,54 @@ mode, this returns a ShellString (compatible with ShellJS v0.6.x, which returns 
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function parseOptions(opt, map, errorOptions) {
   // Validate input
-  if (typeof opt !== &#x27;string&#x27; &#x26;&#x26; !isObject(opt)) {
-    throw new Error(&#x27;options must be strings or key-value pairs&#x27;);
+  if (typeof opt !== 'string' &amp;&amp; !isObject(opt)) {
+    throw new Error('options must be strings or key-value pairs');
   } else if (!isObject(map)) {
-    throw new Error(&#x27;parseOptions() internal error: map must be an object&#x27;);
-  } else if (errorOptions &#x26;&#x26; !isObject(errorOptions)) {
-    throw new Error(&#x27;parseOptions() internal error: errorOptions must be object&#x27;);
+    throw new Error('parseOptions() internal error: map must be an object');
+  } else if (errorOptions &amp;&amp; !isObject(errorOptions)) {
+    throw new Error('parseOptions() internal error: errorOptions must be object');
   }
 
   // All options are false by default
   var options = {};
   Object.keys(map).forEach(function (letter) {
     var optName = map[letter];
-    if (optName[0] !== &#x27;!&#x27;) {
+    if (optName[0] !== '!') {
       options[optName] = false;
     }
   });
 
-  if (opt === &#x27;&#x27;) return options; // defaults
+  if (opt === '') return options; // defaults
 
-  if (typeof opt === &#x27;string&#x27;) {
-    if (opt[0] !== &#x27;-&#x27;) {
-      error(&#x22;Options string must start with a &#x27;-&#x27;&#x22;, errorOptions || {});
+  if (typeof opt === 'string') {
+    if (opt[0] !== '-') {
+      error("Options string must start with a '-'", errorOptions || {});
     }
 
-    // e.g. chars = [&#x27;R&#x27;, &#x27;f&#x27;]
-    var chars = opt.slice(1).split(&#x27;&#x27;);
+    // e.g. chars = ['R', 'f']
+    var chars = opt.slice(1).split('');
 
     chars.forEach(function (c) {
       if (c in map) {
         var optionName = map[c];
-        if (optionName[0] === &#x27;!&#x27;) {
+        if (optionName[0] === '!') {
           options[optionName.slice(1)] = false;
         } else {
           options[optionName] = true;
         }
       } else {
-        error(&#x27;option not recognized: &#x27; + c, errorOptions || {});
+        error('option not recognized: ' + c, errorOptions || {});
       }
     });
   } else { // opt is an Object
     Object.keys(opt).forEach(function (key) {
-      // key is a string of the form &#x27;-r&#x27;, &#x27;-d&#x27;, etc.
+      // key is a string of the form '-r', '-d', etc.
       var c = key[1];
       if (c in map) {
         var optionName = map[c];
         options[optionName] = opt[key]; // assign the given value
       } else {
-        error(&#x27;option not recognized: &#x27; + c, errorOptions || {});
+        error('option not recognized: ' + c, errorOptions || {});
       }
     });
   }
@@ -4277,16 +4270,16 @@ mode, this returns a ShellString (compatible with ShellJS v0.6.x, which returns 
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     // If we are down by one argument and options starts with -, shift everything over.
-    [].unshift.call(arguments, &#x27;&#x27;);
+    [].unshift.call(arguments, '');
   } else {
-    common.error(&#x27;You must specify a file.&#x27;);
+    common.error('You must specify a file.');
   }
 }
 
 options = common.<span class="apidocCodeKeywordSpan">parseOptions</span>(options, {
-  &#x27;R&#x27;: &#x27;recursive&#x27;,
-  &#x27;c&#x27;: &#x27;changes&#x27;,
-  &#x27;v&#x27;: &#x27;verbose&#x27;,
+  'R': 'recursive',
+  'c': 'changes',
+  'v': 'verbose',
 });
 
 filePattern = [].slice.call(arguments, 2);
@@ -4307,28 +4300,28 @@ filePattern = [].slice.call(arguments, 2);
     if (count === 1) {
       return parseInt(16 * Math.random(), 10).toString(16);
     }
-    var hash = &#x27;&#x27;;
-    for (var i = 0; i &#x3c; count; i++) {
+    var hash = '';
+    for (var i = 0; i &lt; count; i++) {
       hash += randomHash(1);
     }
     return hash;
   }
 
-  return &#x27;shelljs_&#x27; + randomHash(20);
+  return 'shelljs_' + randomHash(20);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // event loop).
 function execSync(cmd, opts, pipe) {
 if (!common.config.execPath) {
-  common.error(&#x27;Unable to find a path to the node binary. Please manually set config.execPath&#x27;);
+  common.error('Unable to find a path to the node binary. Please manually set config.execPath');
 }
 
 var tempDir = _tempDir();
-var stdoutFile = path.resolve(tempDir + &#x27;/&#x27; + common.<span class="apidocCodeKeywordSpan">randomFileName</span>());
-var stderrFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var codeFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var scriptFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
-var sleepFile = path.resolve(tempDir + &#x27;/&#x27; + common.randomFileName());
+var stdoutFile = path.resolve(tempDir + '/' + common.<span class="apidocCodeKeywordSpan">randomFileName</span>());
+var stderrFile = path.resolve(tempDir + '/' + common.randomFileName());
+var codeFile = path.resolve(tempDir + '/' + common.randomFileName());
+var scriptFile = path.resolve(tempDir + '/' + common.randomFileName());
+var sleepFile = path.resolve(tempDir + '/' + common.randomFileName());
 
 opts = common.extend({
   silent: common.config.silent,
@@ -4348,7 +4341,7 @@ opts = common.extend({
   return state.pipedValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-//@ var str = cat([&#x27;file1&#x27;, &#x27;file2&#x27;]); // same as above
+//@ var str = cat(['file1', 'file2']); // same as above
 //@ ```
 //@
 //@ Returns a string containing the given file, or a concatenated string
@@ -4357,7 +4350,7 @@ opts = common.extend({
 function _cat(options, files) {
 var cat = common.<span class="apidocCodeKeywordSpan">readFromPipe</span>();
 
-if (!files &#x26;&#x26; !cat) common.error(&#x27;no paths given&#x27;);
+if (!files &amp;&amp; !cat) common.error('no paths given');
 
 files = [].slice.call(arguments, 1);
 
@@ -4377,11 +4370,11 @@ files.forEach(function (file) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _register(name, implementation, wrapOptions) {
   wrapOptions = wrapOptions || {};
-  // If an option isn&#x27;t specified, use the default
+  // If an option isn't specified, use the default
   wrapOptions = objectAssign({}, DEFAULT_WRAP_OPTIONS, wrapOptions);
 
-  if (shell[name] &#x26;&#x26; !wrapOptions.overWrite) {
-    throw new Error(&#x27;unable to overwrite `&#x27; + name + &#x27;` command&#x27;);
+  if (shell[name] &amp;&amp; !wrapOptions.overWrite) {
+    throw new Error('unable to overwrite `' + name + '` command');
   }
 
   if (wrapOptions.pipeOnly) {
@@ -4396,10 +4389,10 @@ files.forEach(function (file) {
 
 
 
-var common = require(&#x27;./common&#x27;);
-var fs = require(&#x27;fs&#x27;);
+var common = require('./common');
+var fs = require('fs');
 
-common.<span class="apidocCodeKeywordSpan">register</span>(&#x27;cat&#x27;, _cat, {
+common.<span class="apidocCodeKeywordSpan">register</span>('cat', _cat, {
   canReceivePipe: true,
 });
 
@@ -4425,8 +4418,8 @@ common.<span class="apidocCodeKeywordSpan">register</span>(&#x27;cat&#x27;, _cat
   } catch (e) {
     // Try to override file permission
 <span class="apidocCodeCommentSpan">    /* istanbul ignore next */
-</span>    if (e.code === &#x27;EPERM&#x27;) {
-      fs.chmodSync(file, &#x27;0666&#x27;);
+</span>    if (e.code === 'EPERM') {
+      fs.chmodSync(file, '0666');
       fs.unlinkSync(file);
     } else {
       throw e;
@@ -4438,15 +4431,15 @@ common.<span class="apidocCodeKeywordSpan">register</span>(&#x27;cat&#x27;, _cat
 exports.expand = expand;
 
 // Normalizes _unlinkSync() across platforms to match Unix behavior, i.e.
-// file can be unlinked even if it&#x27;s read-only, see https://github.com/joyent/node/issues/3006
+// file can be unlinked even if it's read-only, see https://github.com/joyent/node/issues/3006
 function unlinkSync(file) {
 try {
   fs.<span class="apidocCodeKeywordSpan">unlinkSync</span>(file);
 } catch (e) {
   // Try to override file permission
   /* istanbul ignore next */
-  if (e.code === &#x27;EPERM&#x27;) {
-    fs.chmodSync(file, &#x27;0666&#x27;);
+  if (e.code === 'EPERM') {
+    fs.chmodSync(file, '0666');
     fs.unlinkSync(file);
   } else {
 ...</pre></li>
@@ -4481,17 +4474,17 @@ try {
         console.error.apply(console, [cmd].concat(args));
       }
 
-      // If this is coming from a pipe, let&#x27;s set the pipedValue (otherwise, set
+      // If this is coming from a pipe, let's set the pipedValue (otherwise, set
       // it to the empty string)
-      state.pipedValue = (this &#x26;&#x26; typeof this.stdout === &#x27;string&#x27;) ? this.stdout : &#x27;&#x27;;
+      state.pipedValue = (this &amp;&amp; typeof this.stdout === 'string') ? this.stdout : '';
 
       if (options.unix === false) { // this branch is for exec()
         retValue = fn.apply(this, args);
       } else { // and this branch is for everything else
-        if (isObject(args[0]) &#x26;&#x26; args[0].constructor.name === &#x27;Object&#x27;) {
-          // a no-op, allowing the syntax `touch({&#x27;-r&#x27;: file}, ...)`
-        } else if (args.length === 0 || typeof args[0] !== &#x27;string&#x27; || args[0].length &#x3c;= 1 || args[0][0] !== &#x27;-&#x27;) {
-          args.unshift(&#x27;&#x27;); // only add dummy option if &#x27;-option&#x27; not already present
+        if (isObject(args[0]) &amp;&amp; args[0].constructor.name === 'Object') {
+          // a no-op, allowing the syntax `touch({'-r': file}, ...)`
+        } else if (args.length === 0 || typeof args[0] !== 'string' || args[0].length &lt;= 1 || args[0][0] !== '-') {
+          args.unshift(''); // only add dummy option if '-option' not already present
         }
 
         // flatten out arrays that are arguments, to make the syntax:
@@ -4508,16 +4501,16 @@ try {
 
         // Convert ShellStrings (basically just String objects) to regular strings
         args = args.map(function (arg) {
-          if (isObject(arg) &#x26;&#x26; arg.constructor.name === &#x27;String&#x27;) {
+          if (isObject(arg) &amp;&amp; arg.constructor.name === 'String') {
             return arg.toString();
           }
           return arg;
         });
 
-        // Expand the &#x27;~&#x27; if appropriate
+        // Expand the '~' if appropriate
         var homeDir = getUserHome();
         args = args.map(function (arg) {
-          if (typeof arg === &#x27;string&#x27; &#x26;&#x26; arg.slice(0, 2) === &#x27;~/&#x27; || arg === &#x27;~&#x27;) {
+          if (typeof arg === 'string' &amp;&amp; arg.slice(0, 2) === '~/' || arg === '~') {
             return arg.replace(/^~/, homeDir);
           }
           return arg;
@@ -4525,7 +4518,7 @@ try {
 
         // Perform glob-expansion on all arguments after globStart, but preserve
         // the arguments before it (like regexes for sed and grep)
-        if (!config.noglob &#x26;&#x26; options.allowGlobbing === true) {
+        if (!config.noglob &amp;&amp; options.allowGlobbing === true) {
           args = args.slice(0, options.globStart).concat(expand(args.slice(options.globStart)));
         }
 
@@ -4538,7 +4531,7 @@ try {
           retValue = fn.apply(this, args);
         } catch (e) {
 <span class="apidocCodeCommentSpan">          /* istanbul ignore else */
-</span>          if (e.msg === &#x27;earlyExit&#x27;) {
+</span>          if (e.msg === 'earlyExit') {
             retValue = e.retValue;
           } else {
             throw e; // this is probably a bug that should be thrown up the call stack
@@ -4548,35 +4541,35 @@ try {
     } catch (e) {
       /* istanbul ignore next */
       if (!state.error) {
-        // If state.error hasn&#x27;t been set it&#x27;s an error thrown by Node, not us - probably a bug...
-        console.error(&#x27;ShellJS: internal error&#x27;);
+        // If state.error hasn't been set it's an error thrown by Node, not us - probably a bug...
+        console.error('ShellJS: internal error');
         console.error(e.stack || e);
         process.exit(1);
       }
       if (config.fatal) throw e;
     }
 
-    if (options.wrapOutput &#x26;&#x26;
-        (typeof retValue === &#x27;string&#x27; || Array.isArray(retValue))) {
+    if (options.wrapOutput &amp;&amp;
+        (typeof retValue === 'string' || Array.isArray(retValue))) {
       retValue = new ShellString(retValue, state.error, state.errorCode);
     }
 
-    state.currentCmd = &#x27;shell.js&#x27;;
+    state.currentCmd = 'shell.js';
     return retValue;
   };
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var shell = require(&#x27;./shell.js&#x27;);
-var common = require(&#x27;./src/common&#x27;);
+var shell = require('./shell.js');
+var common = require('./src/common');
 Object.keys(shell).forEach(function (cmd) {
   global[cmd] = shell[cmd];
 });
 
-var _to = require(&#x27;./src/to&#x27;);
-String.prototype.to = common.<span class="apidocCodeKeywordSpan">wrap</span>(&#x27;to&#x27;, _to);
+var _to = require('./src/to');
+String.prototype.to = common.<span class="apidocCodeKeywordSpan">wrap</span>('to', _to);
 
-var _toEnd = require(&#x27;./src/toEnd&#x27;);
-String.prototype.toEnd = common.wrap(&#x27;toEnd&#x27;, _toEnd);
+var _toEnd = require('./src/toEnd');
+String.prototype.toEnd = common.wrap('toEnd', _toEnd);
 ...</pre></li>
     </ul>
 
@@ -4627,7 +4620,7 @@ Use this value for calls to `glob.sync()` instead of the default options.
 Example:
 
 ```javascript
-var shell = require(&#x27;shelljs&#x27;);
+var shell = require('shelljs');
 // Make changes to shell.config, and do stuff...
 /* ... */
 ...</pre></li>
@@ -4672,11 +4665,11 @@ var shell = require(&#x27;shelljs&#x27;);
     <li>description and source-code<pre class="apidocCodePre">function _dirs(options, index) {
   if (_isStackIndex(options)) {
     index = options;
-    options = &#x27;&#x27;;
+    options = '';
   }
 
   options = common.parseOptions(options, {
-    &#x27;c&#x27;: &#x27;clear&#x27;,
+    'c': 'clear',
   });
 
   if (options.clear) {
@@ -4689,7 +4682,7 @@ var shell = require(&#x27;shelljs&#x27;);
   if (index) {
     index = _parseStackIndex(index);
 
-    if (index &#x3c; 0) {
+    if (index &lt; 0) {
       index = stack.length + index;
     }
 
@@ -4697,7 +4690,7 @@ var shell = require(&#x27;shelljs&#x27;);
     return stack[index];
   }
 
-  common.log(stack.join(&#x27; &#x27;));
+  common.log(stack.join(' '));
 
   return stack;
 }</pre></li>
@@ -4716,28 +4709,28 @@ var shell = require(&#x27;shelljs&#x27;);
     <li>description and source-code<pre class="apidocCodePre">function _popd(options, index) {
   if (_isStackIndex(options)) {
     index = options;
-    options = &#x27;&#x27;;
+    options = '';
   }
 
   options = common.parseOptions(options, {
-    &#x27;n&#x27;: &#x27;no-cd&#x27;,
+    'n': 'no-cd',
   });
 
   if (!_dirStack.length) {
-    return common.error(&#x27;directory stack empty&#x27;);
+    return common.error('directory stack empty');
   }
 
-  index = _parseStackIndex(index || &#x27;+0&#x27;);
+  index = _parseStackIndex(index || '+0');
 
-  if (options[&#x27;no-cd&#x27;] || index &#x3e; 0 || _dirStack.length + index === 0) {
-    index = index &#x3e; 0 ? index - 1 : index;
+  if (options['no-cd'] || index &gt; 0 || _dirStack.length + index === 0) {
+    index = index &gt; 0 ? index - 1 : index;
     _dirStack.splice(index, 1);
   } else {
     var dir = path.resolve(_dirStack.shift());
-    _cd(&#x27;&#x27;, dir);
+    _cd('', dir);
   }
 
-  return _dirs(&#x27;&#x27;);
+  return _dirs('');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4754,43 +4747,43 @@ var shell = require(&#x27;shelljs&#x27;);
     <li>description and source-code<pre class="apidocCodePre">function _pushd(options, dir) {
   if (_isStackIndex(options)) {
     dir = options;
-    options = &#x27;&#x27;;
+    options = '';
   }
 
   options = common.parseOptions(options, {
-    &#x27;n&#x27;: &#x27;no-cd&#x27;,
+    'n': 'no-cd',
   });
 
   var dirs = _actualDirStack();
 
-  if (dir === &#x27;+0&#x27;) {
+  if (dir === '+0') {
     return dirs; // +0 is a noop
   } else if (!dir) {
-    if (dirs.length &#x3e; 1) {
+    if (dirs.length &gt; 1) {
       dirs = dirs.splice(1, 1).concat(dirs);
     } else {
-      return common.error(&#x27;no other directory&#x27;);
+      return common.error('no other directory');
     }
   } else if (_isStackIndex(dir)) {
     var n = _parseStackIndex(dir);
     dirs = dirs.slice(n).concat(dirs.slice(0, n));
   } else {
-    if (options[&#x27;no-cd&#x27;]) {
+    if (options['no-cd']) {
       dirs.splice(1, 0, dir);
     } else {
       dirs.unshift(dir);
     }
   }
 
-  if (options[&#x27;no-cd&#x27;]) {
+  if (options['no-cd']) {
     dirs = dirs.slice(1);
   } else {
     dir = path.resolve(dirs.shift());
-    _cd(&#x27;&#x27;, dir);
+    _cd('', dir);
   }
 
   _dirStack = dirs;
-  return _dirs(&#x27;&#x27;);
+  return _dirs('');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4811,22 +4804,22 @@ var shell = require(&#x27;shelljs&#x27;);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function error(msg, _code, options) {
   // Validate input
-  if (typeof msg !== &#x27;string&#x27;) throw new Error(&#x27;msg must be a string&#x27;);
+  if (typeof msg !== 'string') throw new Error('msg must be a string');
 
   var DEFAULT_OPTIONS = {
     continue: false,
     code: 1,
-    prefix: state.currentCmd + &#x27;: &#x27;,
+    prefix: state.currentCmd + ': ',
     silent: false,
   };
 
-  if (typeof _code === &#x27;number&#x27; &#x26;&#x26; isObject(options)) {
+  if (typeof _code === 'number' &amp;&amp; isObject(options)) {
     options.code = _code;
-  } else if (isObject(_code)) { // no &#x27;code&#x27;
+  } else if (isObject(_code)) { // no 'code'
     options = _code;
-  } else if (typeof _code === &#x27;number&#x27;) { // no &#x27;options&#x27;
+  } else if (typeof _code === 'number') { // no 'options'
     options = { code: _code };
-  } else if (typeof _code !== &#x27;number&#x27;) { // only &#x27;msg&#x27;
+  } else if (typeof _code !== 'number') { // only 'msg'
     options = {};
   }
   options = objectAssign({}, DEFAULT_OPTIONS, options);
@@ -4834,17 +4827,17 @@ var shell = require(&#x27;shelljs&#x27;);
   if (!state.errorCode) state.errorCode = options.code;
 
   var logEntry = convertErrorOutput(options.prefix + msg);
-  state.error = state.error ? state.error + &#x27;\n&#x27; : &#x27;&#x27;;
+  state.error = state.error ? state.error + '\n' : '';
   state.error += logEntry;
 
   // Throw an error, or log the entry
   if (config.fatal) throw new Error(logEntry);
-  if (msg.length &#x3e; 0 &#x26;&#x26; !options.silent) log(logEntry);
+  if (msg.length &gt; 0 &amp;&amp; !options.silent) log(logEntry);
 
   if (!options.continue) {
     throw {
-      msg: &#x27;earlyExit&#x27;,
-      retValue: (new ShellString(&#x27;&#x27;, state.error, state.errorCode)),
+      msg: 'earlyExit',
+      retValue: (new ShellString('', state.error, state.errorCode)),
     };
   }
 }</pre></li>
@@ -4856,13 +4849,13 @@ var shell = require(&#x27;shelljs&#x27;);
 function _cat(options, files) {
 var cat = common.readFromPipe();
 
-if (!files &#x26;&#x26; !cat) common.<span class="apidocCodeKeywordSpan">error</span>(&#x27;no paths given&#x27;);
+if (!files &amp;&amp; !cat) common.<span class="apidocCodeKeywordSpan">error</span>('no paths given');
 
 files = [].slice.call(arguments, 1);
 
 files.forEach(function (file) {
   if (!fs.existsSync(file)) {
-    common.error(&#x27;no such file or directory: &#x27; + file);
+    common.error('no such file or directory: ' + file);
   }
 ...</pre></li>
     </ul>
@@ -4878,54 +4871,54 @@ files.forEach(function (file) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function parseOptions(opt, map, errorOptions) {
   // Validate input
-  if (typeof opt !== &#x27;string&#x27; &#x26;&#x26; !isObject(opt)) {
-    throw new Error(&#x27;options must be strings or key-value pairs&#x27;);
+  if (typeof opt !== 'string' &amp;&amp; !isObject(opt)) {
+    throw new Error('options must be strings or key-value pairs');
   } else if (!isObject(map)) {
-    throw new Error(&#x27;parseOptions() internal error: map must be an object&#x27;);
-  } else if (errorOptions &#x26;&#x26; !isObject(errorOptions)) {
-    throw new Error(&#x27;parseOptions() internal error: errorOptions must be object&#x27;);
+    throw new Error('parseOptions() internal error: map must be an object');
+  } else if (errorOptions &amp;&amp; !isObject(errorOptions)) {
+    throw new Error('parseOptions() internal error: errorOptions must be object');
   }
 
   // All options are false by default
   var options = {};
   Object.keys(map).forEach(function (letter) {
     var optName = map[letter];
-    if (optName[0] !== &#x27;!&#x27;) {
+    if (optName[0] !== '!') {
       options[optName] = false;
     }
   });
 
-  if (opt === &#x27;&#x27;) return options; // defaults
+  if (opt === '') return options; // defaults
 
-  if (typeof opt === &#x27;string&#x27;) {
-    if (opt[0] !== &#x27;-&#x27;) {
-      error(&#x22;Options string must start with a &#x27;-&#x27;&#x22;, errorOptions || {});
+  if (typeof opt === 'string') {
+    if (opt[0] !== '-') {
+      error("Options string must start with a '-'", errorOptions || {});
     }
 
-    // e.g. chars = [&#x27;R&#x27;, &#x27;f&#x27;]
-    var chars = opt.slice(1).split(&#x27;&#x27;);
+    // e.g. chars = ['R', 'f']
+    var chars = opt.slice(1).split('');
 
     chars.forEach(function (c) {
       if (c in map) {
         var optionName = map[c];
-        if (optionName[0] === &#x27;!&#x27;) {
+        if (optionName[0] === '!') {
           options[optionName.slice(1)] = false;
         } else {
           options[optionName] = true;
         }
       } else {
-        error(&#x27;option not recognized: &#x27; + c, errorOptions || {});
+        error('option not recognized: ' + c, errorOptions || {});
       }
     });
   } else { // opt is an Object
     Object.keys(opt).forEach(function (key) {
-      // key is a string of the form &#x27;-r&#x27;, &#x27;-d&#x27;, etc.
+      // key is a string of the form '-r', '-d', etc.
       var c = key[1];
       if (c in map) {
         var optionName = map[c];
         options[optionName] = opt[key]; // assign the given value
       } else {
-        error(&#x27;option not recognized: &#x27; + c, errorOptions || {});
+        error('option not recognized: ' + c, errorOptions || {});
       }
     });
   }
@@ -4933,16 +4926,16 @@ files.forEach(function (file) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     // If we are down by one argument and options starts with -, shift everything over.
-    [].unshift.call(arguments, &#x27;&#x27;);
+    [].unshift.call(arguments, '');
   } else {
-    common.error(&#x27;You must specify a file.&#x27;);
+    common.error('You must specify a file.');
   }
 }
 
 options = common.<span class="apidocCodeKeywordSpan">parseOptions</span>(options, {
-  &#x27;R&#x27;: &#x27;recursive&#x27;,
-  &#x27;c&#x27;: &#x27;changes&#x27;,
-  &#x27;v&#x27;: &#x27;verbose&#x27;,
+  'R': 'recursive',
+  'c': 'changes',
+  'v': 'verbose',
 });
 
 filePattern = [].slice.call(arguments, 2);
@@ -4962,7 +4955,7 @@ filePattern = [].slice.call(arguments, 2);
   return state.pipedValue;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-//@ var str = cat([&#x27;file1&#x27;, &#x27;file2&#x27;]); // same as above
+//@ var str = cat(['file1', 'file2']); // same as above
 //@ ```
 //@
 //@ Returns a string containing the given file, or a concatenated string
@@ -4971,7 +4964,7 @@ filePattern = [].slice.call(arguments, 2);
 function _cat(options, files) {
 var cat = common.<span class="apidocCodeKeywordSpan">readFromPipe</span>();
 
-if (!files &#x26;&#x26; !cat) common.error(&#x27;no paths given&#x27;);
+if (!files &amp;&amp; !cat) common.error('no paths given');
 
 files = [].slice.call(arguments, 1);
 
@@ -4991,11 +4984,11 @@ files.forEach(function (file) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _register(name, implementation, wrapOptions) {
   wrapOptions = wrapOptions || {};
-  // If an option isn&#x27;t specified, use the default
+  // If an option isn't specified, use the default
   wrapOptions = objectAssign({}, DEFAULT_WRAP_OPTIONS, wrapOptions);
 
-  if (shell[name] &#x26;&#x26; !wrapOptions.overWrite) {
-    throw new Error(&#x27;unable to overwrite `&#x27; + name + &#x27;` command&#x27;);
+  if (shell[name] &amp;&amp; !wrapOptions.overWrite) {
+    throw new Error('unable to overwrite `' + name + '` command');
   }
 
   if (wrapOptions.pipeOnly) {
@@ -5010,10 +5003,10 @@ files.forEach(function (file) {
 
 
 
-var common = require(&#x27;./common&#x27;);
-var fs = require(&#x27;fs&#x27;);
+var common = require('./common');
+var fs = require('fs');
 
-common.<span class="apidocCodeKeywordSpan">register</span>(&#x27;cat&#x27;, _cat, {
+common.<span class="apidocCodeKeywordSpan">register</span>('cat', _cat, {
   canReceivePipe: true,
 });
 
@@ -5033,3 +5026,4 @@ common.<span class="apidocCodeKeywordSpan">register</span>(&#x27;cat&#x27;, _cat
     ]
 </div>
 </div>
+</body></html>
